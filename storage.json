@@ -1,17 +1,1 @@
-{
-    "3PMRkSRQ9cSZJzGR6JGRxMej71iUPDZiLSS": {
-        "id": 128296413,
-        "is_bot": false,
-        "first_name": "Daniil",
-        "last_name": "Tsigelnitskiy",
-        "username": "tsDaniil",
-        "language_code": "ru",
-        "chat": {
-            "id": 128296413,
-            "first_name": "Daniil",
-            "last_name": "Tsigelnitskiy",
-            "username": "tsDaniil",
-            "type": "private"
-        }
-    }
-}
+{"3PMRkSRQ9cSZJzGR6JGRxMej71iUPDZiLSS":{"id":128296413,"is_bot":false,"first_name":"Daniil","last_name":"Tsigelnitskiy","username":"tsDaniil","language_code":"ru"}}

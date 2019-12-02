@@ -1,4 +1,4 @@
-import { readJSON, outputJSON } from 'fs-extra';
+import { outputJSON, readJSON } from 'fs-extra';
 import { join } from 'path';
 
 
@@ -16,8 +16,12 @@ export class Storage {
             .then(data => outputJSON(this._path, Object.assign(data, { [key]: value })));
     }
 
+    public keys(): Promise<Array<string>> {
+        return this._read().then(data => Object.keys(data));
+    }
+
     private _read(): Promise<any> {
         return readJSON(this._path)
-            .catch(() => Object.create(null))
+            .catch(() => Object.create(null));
     }
 }
