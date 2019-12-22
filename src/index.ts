@@ -5,7 +5,7 @@ import * as Koa from 'koa';
 import { libs } from '@waves/waves-transactions';
 import { options } from 'yargs';
 import * as bodyParser from 'koa-bodyparser';
-import watch from '@waves/blockchain-api/dist/tools/adresses/watch';
+import watch, { IEvents } from '@waves/node-api-js/cjs/tools/adresses/watch';
 
 
 const { token } = options({ token: { alias: 't', required: true, type: 'string' } }).argv;
@@ -19,7 +19,7 @@ app.use(bodyParser());
 storage.keys().then(list => {
     list.forEach(address => {
         watch('https://nodes.wavesplatform.com', address, 10000).then(watcher => {
-            watcher.on('change-state', (list: any) => {
+            watcher.on('change-state', (list: IEvents['change-state']) => {
                 storage.read(address).then(data => {
                     telegram.sendMessage(data.id, JSON.stringify(list, null, 4));
                 });

@@ -13,8 +13,8 @@
     "@types/ramda": "^0.25.47",
     "@types/superagent": "^3.8.6",
     "@types/yargs": "^13.0.3",
-    "@waves/blockchain-api": "0.0.5",
     "@waves/data-entities": "^1.8.0",
+    "@waves/node-api-js": "0.0.1",
     "@waves/signature-generator": "^5.0.0",
     "@waves/waves-transactions": "^3.24.0",
     "bluebird": "^3.5.3",
@@ -26,6 +26,7 @@
     "ramda": "^0.26.1",
     "superagent": "^4.1.0",
     "ts-utils": "^6.0.6",
+    "typed-ts-events": "^1.1.1",
     "typescript": "^3.3.1",
     "yargs": "^15.0.2"
   },
