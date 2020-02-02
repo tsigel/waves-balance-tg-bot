@@ -6,7 +6,7 @@ import { libs } from '@waves/waves-transactions';
 import { options } from 'yargs';
 import * as bodyParser from 'koa-bodyparser';
 import watch from '@waves/node-api-js/cjs/tools/adresses/watch';
-import { getTemplate } from 'templates';
+import { getTemplate } from './templates';
 
 
 const { token } = options({ token: { alias: 't', required: true, type: 'string' } }).argv;

@@ -28,11 +28,11 @@
     "superagent": "^4.1.0",
     "ts-utils": "^6.0.6",
     "typed-ts-events": "^1.1.1",
-    "typescript": "^3.3.1",
     "yargs": "^15.0.2"
   },
   "devDependencies": {
-    "ts-node": "^8.5.4"
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.5"
   },
   "scripts": {
     "start": "ts-node ./src/index.ts"
