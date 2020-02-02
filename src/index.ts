@@ -5,23 +5,29 @@ import * as Koa from 'koa';
 import { libs } from '@waves/waves-transactions';
 import { options } from 'yargs';
 import * as bodyParser from 'koa-bodyparser';
-import watch, { IEvents } from '@waves/node-api-js/cjs/tools/adresses/watch';
+import watch from '@waves/node-api-js/cjs/tools/adresses/watch';
+import { getTemplate } from 'templates';
 
 
 const { token } = options({ token: { alias: 't', required: true, type: 'string' } }).argv;
 const app = new Koa();
 const telegram = new TelegramBot(token as string, { polling: true });
 const storage = new Storage();
+const node = 'https://nodes.wavesplatform.com';
 
 app.use(bodyParser());
 
 
 storage.keys().then(list => {
     list.forEach(address => {
-        watch('https://nodes.wavesplatform.com', address, 10000).then(watcher => {
-            watcher.on('change-state', (list: IEvents['change-state']) => {
+        watch(node, address, 10000).then(watcher => {
+            watcher.on('change-state', (list) => {
                 storage.read(address).then(data => {
-                    telegram.sendMessage(data.id, JSON.stringify(list, null, 4));
+                    list.forEach((tx) => {
+                        getTemplate(node, tx).then((template) => {
+                            telegram.sendMessage(data.id, template);
+                        });
+                    })
                 });
             });
         });
