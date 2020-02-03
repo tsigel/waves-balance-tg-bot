@@ -5,8 +5,9 @@ import * as Koa from 'koa';
 import { libs } from '@waves/waves-transactions';
 import { options } from 'yargs';
 import * as bodyParser from 'koa-bodyparser';
-import watch from '@waves/node-api-js/cjs/tools/adresses/watch';
+import { Watch } from '@waves/node-api-js/cjs/tools/adresses/watch';
 import { getTemplate } from './templates';
+import { addWatcherListener } from './addWatcherListener';
 
 
 const { token } = options({ token: { alias: 't', required: true, type: 'string' } }).argv;
@@ -14,20 +15,19 @@ const app = new Koa();
 const telegram = new TelegramBot(token as string, { polling: true });
 const storage = new Storage();
 const node = 'https://nodes.wavesplatform.com';
+const state: Record<string, Promise<Watch>> = Object.create(null);
 
 app.use(bodyParser());
 
 
 storage.keys().then(list => {
     list.forEach(address => {
-        watch(node, address, 10000).then(watcher => {
-            watcher.on('change-state', (list) => {
+        addWatcherListener(node, state, address, (list) => {
+            list.forEach((tx) => {
                 storage.read(address).then(data => {
-                    list.forEach((tx) => {
-                        getTemplate(node, tx).then((template) => {
-                            telegram.sendMessage(data.id, template);
-                        });
-                    })
+                    getTemplate(node, tx).then((template) => {
+                        telegram.sendMessage(data.id, template);
+                    });
                 });
             });
         });
@@ -125,6 +125,15 @@ telegram.on('text', message => {
             break;
         case 'watch':
             storage.write(address, message.from);
+            addWatcherListener(node, state, address, (list) => {
+                list.forEach((tx) => {
+                    storage.read(address).then(data => {
+                        getTemplate(node, tx).then((template) => {
+                            telegram.sendMessage(data.id, template);
+                        });
+                    });
+                });
+            });
             break;
         default:
             telegram.sendMessage(message.chat.id, `Unsupported message! Ask Daniil about bot API!`);
