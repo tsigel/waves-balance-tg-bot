@@ -8,7 +8,7 @@ export const addWatcherListener = curry((
     state: Record<string, Promise<Watch>>,
     address: string,
     handler: THandler) => {
-    state[address] = create(node, address)
+    state[address] = create(node, address, 10000)
         .then((watcher) => {
             watcher.on('change-state', handler);
 
@@ -17,4 +17,4 @@ export const addWatcherListener = curry((
     return state[address];
 });
 
-type THandler = (list: Array<TTransactionFromAPI<string | number>>) => void;
+type THandler = (list: Readonly<Array<TTransactionFromAPI<string | number>>>) => void;
