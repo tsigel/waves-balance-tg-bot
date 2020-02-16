@@ -19,6 +19,8 @@ app.use(bodyParser());
 
 
 storage.keys().then(list => {
+
+    console.log(`Balance watcher bot is runing! Now i have ${list.length} listeners`);
     list.forEach(address => {
         watch(node, address, 10000).then(watcher => {
             watcher.on('change-state', (list) => {
