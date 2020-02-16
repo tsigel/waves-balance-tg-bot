@@ -16,7 +16,7 @@ export const massTransfer = (node: string, tx: IMassTransferTransaction<string |
             'New Mass Transfer  transaction!',
             `id: ${tx.id}`,
             ...tx.transfers.map((item) => {
-                const amount = BigNumber.toBigNumber(tx.fee)
+                const amount = BigNumber.toBigNumber(item.amount)
                     .div(Math.pow(10, tx.assetId == null ? 8 : hash[tx.assetId].decimals))
                     .toFixed();
 
