@@ -22,7 +22,7 @@
     "fs-extra": "^8.1.0",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.2.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "node-telegram-bot-api": "^0.40.0",
     "ramda": "^0.26.1",
     "superagent": "^4.1.0",
